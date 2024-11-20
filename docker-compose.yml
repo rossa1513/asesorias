@@ -1,11 +1,45 @@
-version: "2.2"
+version: "3.3"
 services:
-  api:
-    build:
+  myapp-1:
+    container_name: myapp-1
+    image: myapp:v1
+    build: 
       context: .
-      dockerfile: Dockerfile
     ports:
-      - "4000:4000"  
-    volumes:
-      - .:/app  
-      - /app/node_modules 
+      - "6078:4000"
+    links:
+      - mongodb
+    networks:
+      - mynetwork
+  myapp-2:
+    container_name: myapp-2
+    image: myapp:v1
+    build: 
+      context: .
+    ports:
+      - "6079:4000"
+    links:
+      - mongodb
+    networks:
+      - mynetwork
+  balanceador-modulo-1:
+    container_name: balanceador-1
+    image: balanceador-1:v1
+    build: 
+      context: ./Tools
+    ports:
+      - "6062:82"
+    networks:
+      - mynetwork
+  mongodb:
+    image: mongo
+    ports:
+      - "27020:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
