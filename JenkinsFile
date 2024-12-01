@@ -15,7 +15,7 @@ pipeline {
         stage('Deploy') {
             steps {
 
-                bat 'docker-compose up -d'
+                bat 'C:\\Windows\\System32\\cmd.exe /c docker-compose up -d'
                 
             
             }
