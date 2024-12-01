@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clonacion del Repositorio') {
+            steps {
+                git branch: 'master', url: 'https://github.com/rossa1513/asesorias.git'
+            }
+        }
+        stage('Construccion de Docker image') {
+            steps{
+                script {
+                    docker.build('myapp:v1', '.')
+                }
+            }
+        }
+        stage('Desplegar contenedores docker') {
+            steps {
+                script {
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            emailext(
+                subject: "Jenkins Build ${currentBuild.fullDisplayName}",
+                body: "Build ${currentBuild.fullDisplayName} completed",
+                to: "rosa.diaziy@est.iudigital.edu.co"
+            )
+        }
+    }
+}

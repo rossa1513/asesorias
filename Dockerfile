@@ -1,7 +1,7 @@
-FROM node:16
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
+FROM node
+
+RUN mkdir -p /home/index
+
+COPY . /home/index
 EXPOSE 4000
-CMD ["node", "index.js"]
+CMD ["node", "/home/index/index.js"]
