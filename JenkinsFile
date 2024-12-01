@@ -2,24 +2,25 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Clonacion del Repositorio') {
             steps {
-                echo "Etapa BUILD no disponible"
+                git branch: 'main', url: 'https://github.com/rossa1513/asesorias.git'
             }
         }
-        stage('Tests') {
+        stage('Construccion de Docker image') {
             steps{
-                echo "Etapa de TEST no disponible"
+                script {
+                    docker.build('myapp-modulo:v1', '.')
+                }
             }
         }
-        stage('Deploy') {
+        stage('Desplegar contenedores docker') {
             steps {
-
-                bat 'C:\\Windows\\System32\\cmd.exe /c docker-compose up -d'
-                
-            
+                script {
+                    sh 'docker-compose up -d'
+                }
             }
         }
     }
-    
+
 }
