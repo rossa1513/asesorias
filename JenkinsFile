@@ -15,7 +15,7 @@ pipeline {
         stage('Deploy') {
             steps {
 
-                bat 'echo desplegando aplicacion'
+                bat 'docker-compose up -d'
                 
             
             }
