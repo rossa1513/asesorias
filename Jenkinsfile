@@ -15,7 +15,7 @@ pipeline {
             withCredentials([
               string(credentialsId: 'MONGO_URI', variable: 'MONGO_URI')
             ]) {
-             sh 'docker-compose up -d'
+             bat 'docker-compose up -d'
             }
         }
       }
