@@ -17,8 +17,13 @@ pipeline {
         stage('Desplegar contenedores docker') {
             steps {
                 script {
-                    sh 'docker-compose up -d'
+                    bat 'docker-compose up -d'
                 }
+            }
+        }
+        stage('Print PATH') {
+            steps {
+                bat 'echo %PATH%'  // Este es el comando de Windows en el contexto de Jenkins
             }
         }
     }
